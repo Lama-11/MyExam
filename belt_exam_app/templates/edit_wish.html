@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>The Wishing App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+
+<body style="padding: 20px;">
+    <div class="row ">
+        <div class="col">
+            <h1>Hello {{user.first_name}}! Let's edit your wish!</h1>
+        </div>
+        <div class="col"><a href="/logout" class="btn btn-danger">Logout</a></div>
+    </div>
+    <br>
+    <br>
+    <form action="/update/{{wish.id}}" method="POST">
+        {% csrf_token %}
+        <p>I wish for: <input type="text" name="item_name" id="item_name" value="{{wish.item_name}}"></p>
+        <br>
+        <p>Description <input type="text" name="description" value="{{wish.description}}"></p>
+        <br>
+        <a href="/wishes" class="btn btn-outline-danger">Cancel</a>
+        <input class="btn btn-outline-info" type="submit" value="Edit">
+    </form>
+
+    {% if messages %}
+    <ul style="color:red">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+            {{ message }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</body>
+</html>
